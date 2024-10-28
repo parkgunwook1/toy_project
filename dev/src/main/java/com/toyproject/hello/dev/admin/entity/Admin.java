@@ -1,4 +1,4 @@
-package com.toyproject.hello.dev.admin.vo;
+package com.toyproject.hello.dev.admin.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,8 +1,8 @@
 package com.toyproject.hello.dev.admin.controller;
 
 import com.toyproject.hello.dev.admin.service.AdminService;
-import com.toyproject.hello.dev.admin.vo.Admin;
-import com.toyproject.hello.dev.post.vo.Post;
+import com.toyproject.hello.dev.admin.entity.Admin;
+import com.toyproject.hello.dev.post.entity.Post;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

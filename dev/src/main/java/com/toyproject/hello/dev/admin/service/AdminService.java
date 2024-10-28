@@ -1,7 +1,7 @@
 package com.toyproject.hello.dev.admin.service;
 
 import com.toyproject.hello.dev.admin.repository.AdminRepository;
-import com.toyproject.hello.dev.admin.vo.Admin;
+import com.toyproject.hello.dev.admin.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
