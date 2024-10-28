@@ -1,5 +1,6 @@
 package com.toyproject.hello.dev.admin.service;
 
+import com.toyproject.hello.dev.admin.dto.AdminDto;
 import com.toyproject.hello.dev.admin.repository.AdminRepository;
 import com.toyproject.hello.dev.admin.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,9 @@ public class AdminService {
         return adminRepository.findById(adminId).orElse(null);
     }
 
-    public String getAdminPassword(String adminId) {
+    public AdminDto getAdminPassword(String adminId) {
         return adminRepository.findByAdminId(adminId)
-                .map(Admin::getAdminPassword)
-                .orElse("Password not found");
+                .map(admin -> new AdminDto(admin.getAdminId(), admin.getAdminPassword()))
+                .orElse(null);
     }
 }

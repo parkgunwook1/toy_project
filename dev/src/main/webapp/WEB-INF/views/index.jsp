@@ -52,8 +52,7 @@
     </style>
 </head>
 <body>
-
-
+<jsp:include page="/WEB-INF/views/main/header.jsp"/>
 
     <div class="button-container">
         <button class="button" onclick="writePost()">글쓰기</button>
