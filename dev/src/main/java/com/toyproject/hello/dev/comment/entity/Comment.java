@@ -17,7 +17,11 @@ public class Comment {
     @ManyToOne // 다대 일 관계 -> 여러개의 Comment가 하나의 Post에 속할 수 있다는 의미
     @JoinColumn(name = "post_id", nullable = false) // 외래키 설정
     public Post post;
+
+    @Column(length = 100)
     public String author;
+
+    @Column(length = 300)
     public String content;
 
     @Column(name = "create_date")

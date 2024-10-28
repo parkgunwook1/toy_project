@@ -32,6 +32,7 @@ public class Post {
 
     @Column(name = "view_count")
     public int viewCount;
+    @Column(length = 300)
     public String image;
 
     // 댓글과의 일대다 관계

@@ -1,11 +1,12 @@
 package com.toyproject.hello.dev.admin.controller;
 
+import com.toyproject.hello.dev.admin.dto.AdminDto;
 import com.toyproject.hello.dev.admin.service.AdminService;
 import com.toyproject.hello.dev.admin.entity.Admin;
 import com.toyproject.hello.dev.post.entity.Post;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor // lombok 제공 : final 붙은 속성 생성자 자동으로 만들어준다.
 @Controller
+@Slf4j  // lombok 제공
 public class AdminController {
 
     private final AdminService adminService;
@@ -36,9 +38,12 @@ public class AdminController {
     @ResponseBody
     public String getAdminPassword(@PathVariable String adminId) {
 
-        String password = adminService.getAdminPassword(adminId);
+        AdminDto adminDto = adminService.getAdminPassword(adminId);
 
-        return password;
+        if (adminDto != null) {
+            return  adminDto.getAdminPassword();
+        }
+        return null;
     }
 
     // 회원 리스트 리턴

@@ -1,5 +1,6 @@
 package com.toyproject.hello.dev.admin.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
@@ -11,8 +12,10 @@ import lombok.Setter;
 public class Admin {
 
     @Id
+    @Column(name = "admin_id", length = 50)
     private String adminId;
 
+    @Column(name = "admin_password" , length = 150, nullable = false)
     private String adminPassword;
 
 }
