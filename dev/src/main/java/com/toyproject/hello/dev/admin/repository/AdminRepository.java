@@ -1,6 +1,6 @@
 package com.toyproject.hello.dev.admin.repository;
 
-import com.toyproject.hello.dev.admin.vo.Admin;
+import com.toyproject.hello.dev.admin.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
