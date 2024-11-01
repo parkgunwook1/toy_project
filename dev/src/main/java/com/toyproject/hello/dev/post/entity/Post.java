@@ -11,11 +11,27 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "POST")
+@Table(name = "post")
 @Getter
 @Setter
 @Builder
 public class Post {
+
+    public Post() {
+
+    }
+
+    public Post(int postId, String title, String content, String author, Date createDate, Date modifiedDate, int viewCount, String image, String status) {
+        this.postId = postId;
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.createDate = createDate;
+        this.modifiedDate = modifiedDate;
+        this.viewCount = viewCount;
+        this.image = image;
+        this.status = status;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,8 +63,8 @@ public class Post {
     public String status;
 
     // 댓글과의 일대다 관계
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Comment> comments;
+//    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+//    public List<Comment> comments;
 
     // DTO 변환 메서드
     public static Post ToPostEntity(PostDto postDto) {
@@ -62,7 +78,7 @@ public class Post {
                 .viewCount(postDto.getViewCount())
                 .image(postDto.getImage())
                 .status(postDto.getStatus())
-                .comments(postDto.getComments())
+//                .comments(postDto.getComments())
                 .build();
     }
 }

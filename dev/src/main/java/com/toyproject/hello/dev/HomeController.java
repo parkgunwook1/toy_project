@@ -20,8 +20,11 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-//        List<PostDto> posts = postService.getPostList();
-//        model.addAttribute("posts" , posts);
+        List<PostDto> posts = postService.getPostList();
+        for(PostDto i : posts) {
+            i.getPostId();
+        }
+        model.addAttribute("posts" , posts);
         return "index";
     }
 }

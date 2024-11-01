@@ -1,6 +1,5 @@
 package com.toyproject.hello.dev.post.service;
 
-import com.toyproject.hello.dev.exception.GlobalExceptionHandler;
 import com.toyproject.hello.dev.post.dto.PostDto;
 import com.toyproject.hello.dev.post.entity.Post;
 import com.toyproject.hello.dev.post.repository.PostRepository;
@@ -25,8 +24,9 @@ public class PostService {
     }
 
     public List<PostDto> getPostList() {
-        System.out.println("test");
         List<Post> posts = postRepository.findAll();
+        System.out.println("test");
+        System.out.println(posts.get(0));
         return posts.stream()
                 .filter(post -> "Y".equals(post.getStatus()))
                 .map(PostDto::toPostDto)

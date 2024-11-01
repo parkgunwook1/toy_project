@@ -23,7 +23,7 @@ public class PostDto {
     public int viewCount;
     public String image;
     public String status;
-    public List<Comment> comments;
+//    public List<Comment> comments;
 
     public static PostDto toPostDto(Post post) {
         return PostDto.builder()
@@ -36,7 +36,7 @@ public class PostDto {
                 .viewCount(post.getViewCount())
                 .image(post.getImage())
                 .status(post.getStatus())
-                .comments(post.getComments())
+//                .comments(post.getComments())
                 .build();
     }
 }
