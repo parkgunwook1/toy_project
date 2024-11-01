@@ -51,7 +51,7 @@
         <h1>메인 페이지</h1>
         <nav>
             <a href="#" onclick="goHome()">홈</a>
-            <a href="#" onclick="login()">로그인</a>
+            <a href="/user/login" onclick="login()">로그인</a>
         </nav>
     </header>
 
