@@ -22,7 +22,7 @@ public class HomeController {
     public String home(Model model) {
         List<PostDto> posts = postService.getPostList();
         for(PostDto i : posts) {
-            i.getPostId();
+            System.out.println(i.getTitle());
         }
         model.addAttribute("posts" , posts);
         return "index";

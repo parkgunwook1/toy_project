@@ -25,8 +25,6 @@ public class PostService {
 
     public List<PostDto> getPostList() {
         List<Post> posts = postRepository.findAll();
-        System.out.println("test");
-        System.out.println(posts.get(0));
         return posts.stream()
                 .filter(post -> "Y".equals(post.getStatus()))
                 .map(PostDto::toPostDto)

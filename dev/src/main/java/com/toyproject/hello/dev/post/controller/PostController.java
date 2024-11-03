@@ -15,6 +15,15 @@ import java.util.List;
 @Controller
 public class PostController {
 
+    /* TODO LIST
+    *
+    * - 게시글 이미지
+    * - ui 깨지는 거 수정, ui 편집
+    * - 상세보기 -> 수정, 삭제
+    * - 헤더, 푸터
+    * - 게시글에 이미지
+    * */
+
     @Autowired
     private PostService postService;
 
