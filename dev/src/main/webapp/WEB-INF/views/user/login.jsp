@@ -10,8 +10,8 @@
 
 <form action="/user/login" method="post" name="loginForm">
     <div>
-        <input type="text" name="userid" placeholder="아이디"/>
-        <input type="text" name="userpw" placeholder="비밀번호"/>
+        <input type="text" name="userId" placeholder="아이디"/>
+        <input type="password" name="userPassword" placeholder="비밀번호"/>
         <button type="submit" id="loginBtn">로그인</button>
     </div>
     <div>
@@ -22,5 +22,11 @@
  </form>
 
 <jsp:include page="/WEB-INF/views/main/footer.jsp"/>
+
+<script>
+    <% if (request.getAttribute("loginFailed") != null) { %>
+        alert("로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.");
+    <% } %>
+</script>
 </body>
 </html>

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 <div class="container">
@@ -49,22 +50,25 @@
                             <td colspan="2"><input type="text" name="userEmail" id="userEmail"></td>
                         </tr>
                         <tr>
-                            <th rowspan="3"><label for="userZipcode">주소</label></th>
-                            <td><input type="text" name="userZipcode" id="userZipcode"></td>
-                            <td><input type="button" value="주소찾기" id="checkUserZipcode" /></td>
+                            <th rowspan="4"><label for="userZipcode">주소</label></th>
+                            <td><input type="text" name="userZipcode" id="userZipcode" placeholder="우편번호" readonly></td>
+                            <td><input type="button" value="주소찾기" id="findAddr" /></td>
                         </tr>
                         <tr>
-                            <td colspan="2"><input type="text" name="userAddress" id="userAddress"></td>
+                            <td colspan="2"><input type="text" name="userAddress" id="userAddress" placeholder="주소"  readonly></td>
                         </tr>
                         <tr>
-                            <td colspan="2"><input type="text" name="userAddressDetail" id="userAddressDetail"></td>
+                            <td colspan="2"><input type="text" name="userAddretc" id="userAddretc" placeholder="참고항목"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="text" name="userAddressDetail" id="userAddressDetail" placeholder="상세주소"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="btn_div">
                 <input type="button" value="이전으로" />
-                <input type="button" id="submitForm" value="회원가입" />
+                <input type="button" id="sendit" value="회원가입" />
             </div>
             <span>이미 아이디가 있으신가요? <a href="/user/login">로그인</a></span>
         </form>

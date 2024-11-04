@@ -18,18 +18,36 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean join(UserDto user) { // 회원가입
-        User UserEntity = new User();
+    public boolean login(String userId, String userPassword) { // 로그인 처리
+        System.out.printf("UserServiceImpl에서 userId, userPw : " + userId + userPassword+"\n");
 
-        // UserDto의 값들을 UserEntity에다 다 넣어줌.
-        UserEntity.setUserId(user.getUserId());
-        UserEntity.setUserPassword(user.getUserName());
+        User UserEntity = new User();
+        UserEntity.setUserId(userId);
+        UserEntity.setUserPassword(userId);
+
+        Optional<User> ckeckUser = userRepository.findByUserIdAndUserPassword(userId, userPassword);
+
+        System.out.printf("checkUser : "+ckeckUser+"\n");
+
+        if (ckeckUser.isPresent()) { // .isPresent()를 사용하면 Optional객체의 유무를 확인할 수 있다.
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean join(UserDto user) { // 회원가입 처리
+        User UserEntity = new User();
+        UserEntity.setUserId(user.getUserId()); // UserDto의 값들을 UserEntity에다 다 넣어줌.
+        UserEntity.setUserPassword(user.getUserPassword());
         UserEntity.setUserName(user.getUserName());
         UserEntity.setUserAge(user.getUserAge());
         UserEntity.setUserGender(user.getUserGender());
         UserEntity.setUserEmail(user.getUserEmail());
         UserEntity.setUserZipcode(user.getUserZipcode());
         UserEntity.setUserAddress(user.getUserAddress());
+        UserEntity.setUserAddretc(user.getUserAddretc());
         UserEntity.setUserAddressDetail(user.getUserAddressDetail());
         UserEntity.setUserType(user.getUserType());
 
@@ -40,7 +58,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User checkId(String userId) { // 아이디 중복체크
-        User checkUser = userRepository.findById(userId).orElse(null); //
+        User checkUser = userRepository.findById(userId).orElse(null);
         return checkUser;
     }
 }

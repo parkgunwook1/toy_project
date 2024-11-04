@@ -16,6 +16,7 @@ public class UserDto {
     private String userEmail;
     private int userZipcode;
     private String userAddress;
+    private String userAddretc;
     private String userAddressDetail;
     private String userType;
 }

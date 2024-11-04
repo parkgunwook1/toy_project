@@ -2,10 +2,12 @@ package com.toyproject.hello.dev.user.controller;
 
 import com.toyproject.hello.dev.user.dto.UserDto;
 import com.toyproject.hello.dev.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,21 +30,21 @@ public class UserController {
         }
     }
     @PostMapping("login")// 로그인 진행
-    public String login(HttpSession session, UserDto user){
-        return null;
-    }
+    public String login(UserDto user, HttpServletRequest req, Model model){
+        HttpSession session = req.getSession();
 
-    @GetMapping("checkId")
-    @ResponseBody
-    public String checkId(String userId) {
-        System.out.printf("userId값 : "+userId);
-        if(userService.checkId(userId) == null){
-            System.out.printf("사용 가능한 아이디입니다.");
-            return "O";
+        String userId = user.getUserId();
+        String userPassword = user.getUserPassword();
+
+        if(userService.login(userId, userPassword)) {
+            System.out.printf(userId+"로 로그인 성공.\n");
+            session.setAttribute("loginUser", userId);
+            return "redirect:/";
         }
         else {
-            System.out.printf("중복된 아이디 입니다.");
-            return "X";
+            System.out.printf("로그인 실패.\n");
+            model.addAttribute("loginFailed", "로그인실패");
+            return "user/login";
         }
     }
 
@@ -62,5 +64,25 @@ public class UserController {
             System.out.printf("회원가입 실패");
             return "user/join";
         }
+    }
+    @GetMapping("checkId") // 회원가입 시 아이디 중복 체크
+    @ResponseBody
+    public String checkId(String userId) {
+        System.out.printf("userId값 : "+userId);
+        if(userService.checkId(userId) == null){
+            System.out.printf("사용 가능한 아이디입니다.");
+            return "O";
+        }
+        else {
+            System.out.printf("중복된 아이디 입니다.");
+            return "X";
+        }
+    }
+
+    @GetMapping("logout") // 로그아웃 진행
+    public String logout(HttpServletRequest req) {
+        System.out.printf("로그아웃됨\n");
+        req.getSession().invalidate();
+        return "redirect:/";
     }
 }

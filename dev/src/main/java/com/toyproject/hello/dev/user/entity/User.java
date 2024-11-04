@@ -35,6 +35,9 @@ public class User {
     @Column(name = "user_address", length = 50, nullable = false)
     private String userAddress;
 
+    @Column(name = "user_addretc", length = 50, nullable = false)
+    private String userAddretc;
+
     @Column(name = "user_address_detail", length = 50, nullable = false)
     private String userAddressDetail;
 
