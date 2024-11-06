@@ -21,7 +21,7 @@ public class Post {
 
     }
 
-    public Post(int postId, String title, String content, String author, Date createDate, Date modifiedDate, int viewCount, String image, String status) {
+    public Post(int postId, String title, String content, String author, Date createDate, Date modifiedDate, int viewCount, String status) {
         this.postId = postId;
         this.title = title;
         this.content = content;
@@ -29,7 +29,6 @@ public class Post {
         this.createDate = createDate;
         this.modifiedDate = modifiedDate;
         this.viewCount = viewCount;
-        this.image = image;
         this.status = status;
     }
 
@@ -56,9 +55,6 @@ public class Post {
     @Column(name = "view_count")
     public int viewCount;
 
-    @Column(length = 300)
-    public String image;
-
     @Column(nullable = false)
     public String status;
 
@@ -76,7 +72,6 @@ public class Post {
                 .createDate(postDto.getCreateDate())
                 .modifiedDate(postDto.getModifiedDate())
                 .viewCount(postDto.getViewCount())
-                .image(postDto.getImage())
                 .status(postDto.getStatus())
 //                .comments(postDto.getComments())
                 .build();

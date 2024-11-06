@@ -21,7 +21,6 @@ public class PostDto {
     public Date createDate;
     public Date modifiedDate;
     public int viewCount;
-    public String image;
     public String status;
 //    public List<Comment> comments;
 
@@ -34,7 +33,6 @@ public class PostDto {
                 .createDate(post.getCreateDate())
                 .modifiedDate(post.getModifiedDate())
                 .viewCount(post.getViewCount())
-                .image(post.getImage())
                 .status(post.getStatus())
 //                .comments(post.getComments())
                 .build();

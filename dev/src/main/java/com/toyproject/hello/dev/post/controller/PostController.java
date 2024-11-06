@@ -3,14 +3,14 @@ package com.toyproject.hello.dev.post.controller;
 import com.toyproject.hello.dev.post.dto.PostDto;
 import com.toyproject.hello.dev.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class PostController {
@@ -22,34 +22,43 @@ public class PostController {
     * - 상세보기 -> 수정, 삭제
     * - 헤더, 푸터
     * - 게시글에 이미지
+    *
+    * - 수정하기 진행중..
     * */
 
     @Autowired
     private PostService postService;
 
     // 상세페이지
-    @GetMapping("post/detail/{postId}")
-    public String detailPost(@PathVariable("postId") int postId, Model model) throws IllegalAccessException {
-
+    @GetMapping("post/detail")
+    public String detailPost(@RequestParam("postId") int postId, Model model) throws IllegalAccessException {
         PostDto post = postService.detailPostById(postId);
         model.addAttribute("post",post);
         return "post/detail";
     }
 
     // 게시글 수정
-    @PostMapping("/post/edit/{postId}")
-    public String editPost(@PathVariable("postId") int postId,
-                           @ModelAttribute("post") PostDto postDto, Model model) throws IllegalAccessException {
+    @PostMapping("/post/update")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> updatePost(@RequestBody PostDto postDto) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            // PostDto 객체를 이용하여 게시물 업데이트
+            PostDto updatedPost = postService.updatePost(postDto);
 
-        postDto.setPostId(postId);
-
-        PostDto post = postService.editPostById(postDto);
-        return "redirect:/post/detail" + postId;
+            response.put("success", true);
+            response.put("title", updatedPost.getTitle());
+            response.put("content", updatedPost.getContent());
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "수정 실패");
+        }
+        return ResponseEntity.ok(response);
     }
 
     // 게시글 삭제
-    @PostMapping("/post/delete/{postId}")
-    public String deletePost(@PathVariable("postId") int postId) {
+    @PostMapping("/post/delete")
+    public String deletePost(@RequestParam("postId") int postId) {
         postService.deletePostById(postId);
         return "redirect:/";
     }
