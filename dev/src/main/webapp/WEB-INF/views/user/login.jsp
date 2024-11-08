@@ -15,8 +15,11 @@
         <button type="submit" id="loginBtn">로그인</button>
     </div>
     <div>
+        <a href="https://kauth.kakao.com/oauth/authorize?client_id=2a15de94fea60ae830427c67bdfd6bae&response_type=code&redirect_uri=http://localhost:8080/kakao/login">카카오 로그인</a>
         <a href="/user/searchId">아이디찾기</a>
         <a href="/user/searchPw">비밀번호찾기</a>
+    </div>
+    <div>
         <a href="/user/join">회원가입</a>
     </div>
  </form>

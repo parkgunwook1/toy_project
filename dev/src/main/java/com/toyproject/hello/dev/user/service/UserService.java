@@ -2,6 +2,7 @@ package com.toyproject.hello.dev.user.service;
 
 import com.toyproject.hello.dev.user.dto.UserDto;
 import com.toyproject.hello.dev.user.entity.User;
+import org.springframework.http.ResponseEntity;
 
 public interface UserService {
     boolean login(String userId, String userPassword); // 로그인 처리
