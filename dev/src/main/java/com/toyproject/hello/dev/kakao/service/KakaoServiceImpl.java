@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.hello.dev.kakao.dto.KakaoProfileDto;
 import com.toyproject.hello.dev.kakao.dto.OAuthTokenDto;
+import com.toyproject.hello.dev.user.dto.UserDto;
+import com.toyproject.hello.dev.user.entity.User;
+import com.toyproject.hello.dev.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,8 +18,16 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Service
 public class KakaoServiceImpl implements KakaoService{
+    private final UserRepository userRepository;
+
+    @Autowired
+    public KakaoServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     // 카카오 토큰 발급.
     @Override
@@ -89,7 +101,7 @@ public class KakaoServiceImpl implements KakaoService{
 
     // 카카오 유저 데이터로 카카오 로그인 하기.
     @Override
-    public boolean kakaoLogin(ResponseEntity<String> kakaoUserProfileResponse) {
+    public UserDto kakaoLogin(ResponseEntity<String> kakaoUserProfileResponse) {
         ObjectMapper objectMapper = new ObjectMapper();
         KakaoProfileDto kakaoProfileDto = null; // 한번 초기화
 
@@ -101,6 +113,26 @@ public class KakaoServiceImpl implements KakaoService{
             e.printStackTrace();
         }
 
-        return false;
+        // id = user_id, nickname = user_pw, nickname = user_name으로 저장 하기.
+        String kakaoId = String.valueOf(kakaoProfileDto.getId());
+        String kakaoNickname = kakaoProfileDto.getProperties().getNickname();
+
+        UserDto newKakaoUser = new UserDto();
+        newKakaoUser.setUserId(kakaoId);
+        newKakaoUser.setUserPassword(kakaoNickname);
+        newKakaoUser.setUserName(kakaoNickname);
+
+        // 가입된 아이디 비밀번호인지 확인.
+        Optional<User> ckeckUser = userRepository.findByUserIdAndUserPassword(kakaoId, kakaoNickname);
+
+        if(ckeckUser.isPresent()){ // .isPresent()를 사용하면 Optional객체의 유무를 확인할 수 있다. (true, false 반환)
+            System.out.printf("기존 유저 카카오 로그인 성공!\n");
+            return newKakaoUser;
+        }
+        else {
+            userRepository.save(User.from(newKakaoUser)); // join 진행
+            System.out.printf("신규 유저 카카오 회원가입 및 로그인 성공!");
+            return newKakaoUser;
+        }
     }
 }

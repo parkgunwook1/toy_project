@@ -29,8 +29,9 @@ public class UserServiceImpl implements UserService{
     public boolean login(String userId, String userPassword) {
         User UserEntity = new User();
         UserEntity.setUserId(userId);
-        UserEntity.setUserPassword(userId);
+        UserEntity.setUserPassword(userPassword);
 
+        // 가입된 아이디 비밀번호 인지 확인.
         Optional<User> ckeckUser = userRepository.findByUserIdAndUserPassword(userId, userPassword);
 
         if (ckeckUser.isPresent()) { // .isPresent()를 사용하면 Optional객체의 유무를 확인할 수 있다.
@@ -43,21 +44,7 @@ public class UserServiceImpl implements UserService{
     // 회원가입 처리
     @Override
     public boolean join(UserDto user) {
-        User UserEntity = new User();
-        UserEntity.setUserId(user.getUserId()); // UserDto의 값들을 UserEntity에다 다 넣어줌.
-        UserEntity.setUserPassword(user.getUserPassword());
-        UserEntity.setUserName(user.getUserName());
-        UserEntity.setUserAge(user.getUserAge());
-        UserEntity.setUserGender(user.getUserGender());
-        UserEntity.setUserEmail(user.getUserEmail());
-        UserEntity.setUserZipcode(user.getUserZipcode());
-        UserEntity.setUserAddress(user.getUserAddress());
-        UserEntity.setUserAddretc(user.getUserAddretc());
-        UserEntity.setUserAddressDetail(user.getUserAddressDetail());
-        UserEntity.setUserType(user.getUserType());
-
-        userRepository.save(UserEntity); // JpaRepository의 .seve(Entity)를 사용해 값을 저장.
-
+        userRepository.save(User.from(user));
         return true;
     }
 

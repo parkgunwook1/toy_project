@@ -1,12 +1,19 @@
 package com.toyproject.hello.dev.kakao.controller;
 
 import com.toyproject.hello.dev.kakao.service.KakaoService;
+import com.toyproject.hello.dev.user.dto.UserDto;
+import com.toyproject.hello.dev.user.entity.User;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/kakao")
@@ -15,8 +22,7 @@ public class KaKaoController {
     private KakaoService kakaoService;
 
     @GetMapping("login")
-    @ResponseBody
-    public String kakaoCallback(String code) {
+    public String kakaoCallback(String code, HttpServletRequest req, Model model) {
         System.out.printf("카카오 인증 코드 : " + code + "\n");
 
         // 카카오토큰response 받기.
@@ -32,13 +38,18 @@ public class KaKaoController {
         System.out.printf("kakaoUserProfileResponse 값 : " + kakaoUserProfileResponse.getBody() + "\n");
 
         // 카카오유저프로필response에서 일부 데이터를 user DB에 저장하고 로그인 처리.
-        if(kakaoService.kakaoLogin(kakaoUserProfileResponse)) {
-            System.out.printf("카카오 로그인 성공!");
+        if(kakaoService.kakaoLogin(kakaoUserProfileResponse) != null) {
+            UserDto loginUser = kakaoService.kakaoLogin(kakaoUserProfileResponse);
+            HttpSession session = req.getSession();
+
+            session.setAttribute("loinUser", loginUser.getUserId());
+
+            System.out.printf(loginUser.getUserName() + "님이 카카오 로그인하였습니다.\n");
+            return "redirect:/";
         }
         else {
-            System.out.printf("카카오 로그인 실패!");
+            System.out.printf("카카오 로그인 실패\n");
+            return "redirect:/";
         }
-
-        return "kakaoUserProfileResponse 값 : " + kakaoUserProfileResponse.getBody();
     }
 }

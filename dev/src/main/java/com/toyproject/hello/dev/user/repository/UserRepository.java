@@ -15,5 +15,4 @@ public interface UserRepository extends JpaRepository<User, String> {
      * 메서드 이름을 **findByUserIdAndUserPassword**로 작성해야 합니다.
      * **/
     Optional<User> findByUserIdAndUserPassword(String userId, String userPassword); // userId, userPassword를 통해 User객체 조회.
-    void joinUser(UserDto userDto); // 회원가입
 }
